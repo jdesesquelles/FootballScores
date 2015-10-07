@@ -33,10 +33,8 @@
         During the off season, fake data will be added to the app.
     </string>
     <string name="widget_text">This is a widget probably.</string>
-    <string name="api_key">6262aa2a38934ed280e30dce3c72da68</string>
-    <!--
-    <string name="api_key">7e8476c8b91144719a1ab69cb9b7b6ca</string>
--->
+    <string name="api_key"></string>
+    
     <string name="home_icon">Home Icon</string>
     <string name="away_icon">Away Icon</string>
 
