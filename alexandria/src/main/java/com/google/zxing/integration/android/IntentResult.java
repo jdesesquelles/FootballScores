@@ -16,6 +16,8 @@
 
 package com.google.zxing.integration.android;
 
+import android.util.Log;
+
 /**
  * <p>Encapsulates the result of a barcode scan invoked through {@link IntentIntegrator}.</p>
  *
@@ -31,6 +33,8 @@ public final class IntentResult {
 
     IntentResult() {
         this(null, null, null, null, null);
+        Log.e("Scanning result", "intent result");
+
     }
 
     IntentResult(String contents,

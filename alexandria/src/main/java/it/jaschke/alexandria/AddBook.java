@@ -9,6 +9,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
 
+import com.google.zxing.integration.android.FragmentIntentIntegrator;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -38,11 +40,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private final String EAN_CONTENT="eanContent";
     private static final String SCAN_FORMAT = "scanFormat";
     private static final String SCAN_CONTENTS = "scanContents";
+    private static Fragment fragment;
 
 
 
 
     public AddBook(){
+        fragment = this;
     }
 
     @Override
@@ -52,7 +56,6 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             outState.putString(EAN_CONTENT, ean.getText().toString());
         }
     }
-
 
     private void addNewEan(String ean) {
         //Once we have an ISBN, start a book intent
@@ -91,6 +94,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             public void afterTextChanged(Editable s) {
                 String ean =s.toString();
                 //catch isbn10 numbers
+                //
                 if(ean.length()==10 && !ean.startsWith("978")){
                     ean="978"+ean;
                 }
@@ -113,10 +117,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 // are using an external app.
                 //when you're done, remove the toast below.
 //                Context context = getActivity();
-
-                IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
-                //PRODUCT_CODE_TYPES
-                scanIntegrator.initiateScan(PRODUCT_CODE_TYPES);
+                FragmentIntentIntegrator scanIntegrator = new FragmentIntentIntegrator(fragment);
+                scanIntegrator.initiateScan();
             }
         });
 

@@ -27,7 +27,8 @@
                 android:maxLength="@integer/ean_size"
                 android:maxLines="1"
                 android:hint="@string/input_hint"
-                android:paddingRight="20dp"/>
+                android:paddingRight="20dp"
+                android:paddingEnd="20dp" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -48,7 +49,8 @@
             android:paddingRight="20dp"
             android:layout_below="@+id/eancontainer"
             android:layout_alignLeft="@+id/eancontainer"
-            android:layout_alignStart="@+id/eancontainer"/>
+            android:layout_alignStart="@+id/eancontainer"
+            android:paddingEnd="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +61,7 @@
             android:maxLines="3"
             android:ellipsize="end"
             android:layout_alignLeft="@+id/eancontainer"
-            />
+            android:layout_alignStart="@+id/eancontainer" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -109,7 +111,7 @@
                 android:id="@+id/delete_button"
                 android:drawableLeft="@drawable/ic_action_discard"
                 android:visibility="invisible"
-                />
+                android:drawableStart="@drawable/ic_action_discard" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -121,7 +123,7 @@
                 android:drawableLeft="@drawable/ic_action_accept"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_gravity="bottom"
-                />
+                android:drawableStart="@drawable/ic_action_accept" />
 
         </LinearLayout>
 

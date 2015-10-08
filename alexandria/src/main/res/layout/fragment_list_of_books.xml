@@ -31,7 +31,9 @@
             android:layout_toStartOf="@+id/searchButton"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp" />
 
 
         <ListView android:id="@+id/listOfBooks"
@@ -43,7 +45,11 @@
                   android:layout_alignRight="@id/searchButton"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentStart="true"
-                  android:layout_toRightOf="@id/searchButton"/>
+                  android:layout_toRightOf="@id/searchButton"
+            android:layout_alignEnd="@id/searchButton"
+            android:layout_marginStart="0dp"
+            android:layout_toEndOf="@id/searchButton"
+            android:layout_alignParentEnd="true" />
 
 
 
