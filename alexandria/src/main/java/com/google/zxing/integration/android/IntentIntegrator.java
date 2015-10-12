@@ -25,7 +25,6 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +33,13 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+// TODO: Fixing the issue with intentIntegrator and support v4 fragment
+import android.support.v4.app.Fragment;
+//import android.app.Fragment;
+
+
+import it.jaschke.alexandria.R;
+
 
 /**
  * <p>A utility class which helps ease integration with Barcode Scanner via {@link Intent}s. This is a simple
@@ -170,10 +176,16 @@ public class IntentIntegrator {
     }
 
     private void initializeConfiguration() {
-        title = DEFAULT_TITLE;
-        message = DEFAULT_MESSAGE;
-        buttonYes = DEFAULT_YES;
-        buttonNo = DEFAULT_NO;
+//        title = DEFAULT_TITLE;
+//        message = DEFAULT_MESSAGE;
+//        buttonYes = DEFAULT_YES;
+//        buttonNo = DEFAULT_NO;
+//        targetApplications = TARGET_ALL_KNOWN;
+
+        title = fragment.getString(R.string.zxing_intent_integrator_default_title);
+        message = fragment.getString(R.string.zxing_intent_integrator_default_message);
+        buttonYes = fragment.getString(R.string.zxing_intent_integrator_default_yes);
+        buttonNo = fragment.getString(R.string.zxing_intent_integrator_default_no);
         targetApplications = TARGET_ALL_KNOWN;
     }
 

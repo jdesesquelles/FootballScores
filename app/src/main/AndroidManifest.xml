@@ -34,7 +34,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
         </activity>
-        <service android:name=".service.myFetchService" />
+        <service android:name=".service.FectFootballApiService" />
 
         <!-- Today Widget -->
         <receiver

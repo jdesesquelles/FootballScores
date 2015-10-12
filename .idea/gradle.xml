@@ -11,7 +11,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/alexandria" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/zxing" />
           </set>
         </option>
       </GradleProjectSettings>

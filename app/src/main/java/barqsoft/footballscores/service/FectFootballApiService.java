@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2013 The Android Open Source Project
+ */
+
 package barqsoft.footballscores.service;
 
 import android.app.IntentService;
@@ -28,12 +32,16 @@ import barqsoft.footballscores.R;
 /**
  * Created by yehya khaled on 3/2/2015.
  */
-public class myFetchService extends IntentService
+
+/**
+ * Fetch the Data from the football Api webservice into the local SQLITE Database Scores.db
+ */
+public class FectFootballApiService extends IntentService
 {
-    public static final String LOG_TAG = "myFetchService";
-    public myFetchService()
+    public static final String LOG_TAG = "FectFootballApiService";
+    public FectFootballApiService()
     {
-        super("myFetchService");
+        super("FectFootballApiService");
     }
 
     // Widget
@@ -46,8 +54,6 @@ public class myFetchService extends IntentService
     {
         getData("n2");
         getData("p2");
-
-        return;
     }
 
     private void updateWidgets() {
@@ -102,9 +108,9 @@ public class myFetchService extends IntentService
             }
             JSON_data = buffer.toString();
         }
-        catch (Exception e)
+        catch (IOException e)
         {
-            Log.e(LOG_TAG,"Exception here : " + e.getMessage());
+            Log.e(LOG_TAG,"IOException : " + e.getMessage());
         }
         finally {
             if(m_connection != null)
@@ -140,7 +146,7 @@ public class myFetchService extends IntentService
                 Log.d(LOG_TAG, "Could not connect to server.");
             }
         }
-        catch(Exception e)
+        catch(JSONException e)
         {
             Log.e(LOG_TAG,e.getMessage());
         }
@@ -178,15 +184,15 @@ public class myFetchService extends IntentService
         final String MATCH_DAY = "matchday";
 
         //Match data
-        String League = null;
-        String mDate = null;
-        String mTime = null;
-        String Home = null;
-        String Away = null;
-        String Home_goals = null;
-        String Away_goals = null;
-        String match_id = null;
-        String match_day = null;
+        String League;
+        String mDate;
+        String mTime;
+        String Home;
+        String Away;
+        String Home_goals;
+        String Away_goals;
+        String match_id;
+        String match_day;
 
         try {
             JSONArray matches = new JSONObject(JSONdata).getJSONArray(FIXTURES);
@@ -273,11 +279,8 @@ public class myFetchService extends IntentService
                     values.add(match_values);
                 }
             }
-            int inserted_data = 0;
             ContentValues[] insert_data = new ContentValues[values.size()];
             values.toArray(insert_data);
-            inserted_data = mContext.getContentResolver().bulkInsert(
-                    DatabaseContract.BASE_CONTENT_URI,insert_data);
 
             //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
             updateWidgets();

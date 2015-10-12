@@ -81,11 +81,11 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                 int matchId = data.getInt(INDEX_MATCH_ID);
 
                 String homeTeamName = data.getString(INDEX_HOME_CREST);
-                int homeCrestResourceId = Utilities.getTeamCrestByTeamName(homeTeamName);
+                int homeCrestResourceId = Utilities.getTeamCrestByTeamName(homeTeamName, null);
                 String homeGoals= data.getString(INDEX_HOME_GOALS);
 
                 String awayTeamName = data.getString(INDEX_AWAY_CREST);
-                int awayCrestResourceId = Utilities.getTeamCrestByTeamName(awayTeamName);
+                int awayCrestResourceId = Utilities.getTeamCrestByTeamName(awayTeamName, null);
                 String awayGoals = data.getString(INDEX_AWAY_GOALS);
 
 
