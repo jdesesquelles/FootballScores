@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Football_Scores-master.iml" filepath="$PROJECT_DIR$/Football_Scores-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/alexandria/alexandria.iml" filepath="$PROJECT_DIR$/alexandria/alexandria.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zxing/zxing.iml" filepath="$PROJECT_DIR$/zxing/zxing.iml" />
     </modules>
   </component>
 </project>
