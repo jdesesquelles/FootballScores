@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.activity.MainActivity;
 import barqsoft.footballscores.ui.MainScreenFragment;
+import android.support.v4.view.PagerTabStrip;
 
 /**
  * Created by yehya khaled on 2/27/2015.
@@ -28,11 +30,17 @@ public class PagerFragment extends Fragment
     public ViewPager mPagerHandler;
     private myPageAdapter mPagerAdapter;
     private MainScreenFragment[] viewFragments = new MainScreenFragment[5];
+    private PagerTabStrip mPagerTabStrip;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
         mPagerHandler = (ViewPager) rootView.findViewById(R.id.pager);
+
+        //pager_header
+        mPagerTabStrip = (PagerTabStrip) rootView.findViewById(R.id.pager_header);
+//        mPagerTabStrip.setTabIndicatorColor(Color.RED);
+
         mPagerAdapter = new myPageAdapter(getChildFragmentManager());
         for (int i = 0;i < NUM_PAGES;i++)
         {

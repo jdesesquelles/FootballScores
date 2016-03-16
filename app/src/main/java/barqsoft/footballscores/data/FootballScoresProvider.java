@@ -7,15 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import barqsoft.footballscores.data.DatabaseContract;
-import barqsoft.footballscores.data.ScoresDBHelper;
 
 /**
  * Created by yehya khaled on 2/25/2015.
  */
-public class ScoresProvider extends ContentProvider
+public class FootballScoresProvider extends ContentProvider
 {
-    private static ScoresDBHelper mOpenHelper;
+    private static FootballDBHelper mOpenHelper;
     private static final int MATCHES = 100;
     private static final int MATCHES_WITH_LEAGUE = 101;
     private static final int MATCHES_WITH_ID = 102;
@@ -23,16 +21,16 @@ public class ScoresProvider extends ContentProvider
     private UriMatcher muriMatcher = buildUriMatcher();
     private static final SQLiteQueryBuilder ScoreQuery =
             new SQLiteQueryBuilder();
-    private static final String SCORES_BY_LEAGUE = DatabaseContract.scores_table.LEAGUE_COL + " = ?";
+    private static final String SCORES_BY_LEAGUE = FootballDataContract.scores_table.LEAGUE_COL + " = ?";
     private static final String SCORES_BY_DATE =
-            DatabaseContract.scores_table.DATE_COL + " LIKE ?";
+            FootballDataContract.scores_table.DATE_COL + " LIKE ?";
     private static final String SCORES_BY_ID =
-            DatabaseContract.scores_table.MATCH_ID + " = ?";
+            FootballDataContract.scores_table.MATCH_ID + " = ?";
 
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = DatabaseContract.BASE_CONTENT_URI.toString();
+        final String authority = FootballDataContract.BASE_CONTENT_URI.toString();
         matcher.addURI(authority, null , MATCHES);
         matcher.addURI(authority, "league" , MATCHES_WITH_LEAGUE);
         matcher.addURI(authority, "id" , MATCHES_WITH_ID);
@@ -44,19 +42,19 @@ public class ScoresProvider extends ContentProvider
     {
         String link = uri.toString();
         {
-           if(link.contentEquals(DatabaseContract.BASE_CONTENT_URI.toString()))
+           if(link.contentEquals(FootballDataContract.BASE_CONTENT_URI.toString()))
            {
                return MATCHES;
            }
-           else if(link.contentEquals(DatabaseContract.scores_table.buildScoreWithDate().toString()))
+           else if(link.contentEquals(FootballDataContract.scores_table.buildScoreWithDate().toString()))
            {
                return MATCHES_WITH_DATE;
            }
-           else if(link.contentEquals(DatabaseContract.scores_table.buildScoreWithId().toString()))
+           else if(link.contentEquals(FootballDataContract.scores_table.buildScoreWithId().toString()))
            {
                return MATCHES_WITH_ID;
            }
-           else if(link.contentEquals(DatabaseContract.scores_table.buildScoreWithLeague().toString()))
+           else if(link.contentEquals(FootballDataContract.scores_table.buildScoreWithLeague().toString()))
            {
                return MATCHES_WITH_LEAGUE;
            }
@@ -66,7 +64,7 @@ public class ScoresProvider extends ContentProvider
     @Override
     public boolean onCreate()
     {
-        mOpenHelper = new ScoresDBHelper(getContext());
+        mOpenHelper = new FootballDBHelper(getContext());
         return false;
     }
 
@@ -82,13 +80,13 @@ public class ScoresProvider extends ContentProvider
         final int match = muriMatcher.match(uri);
         switch (match) {
             case MATCHES:
-                return DatabaseContract.scores_table.CONTENT_TYPE;
+                return FootballDataContract.scores_table.CONTENT_TYPE;
             case MATCHES_WITH_LEAGUE:
-                return DatabaseContract.scores_table.CONTENT_TYPE;
+                return FootballDataContract.scores_table.CONTENT_TYPE;
             case MATCHES_WITH_ID:
-                return DatabaseContract.scores_table.CONTENT_ITEM_TYPE;
+                return FootballDataContract.scores_table.CONTENT_ITEM_TYPE;
             case MATCHES_WITH_DATE:
-                return DatabaseContract.scores_table.CONTENT_TYPE;
+                return FootballDataContract.scores_table.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri :" + uri );
         }
@@ -106,19 +104,19 @@ public class ScoresProvider extends ContentProvider
         switch (match)
         {
             case MATCHES: retCursor = mOpenHelper.getReadableDatabase().query(
-                    DatabaseContract.SCORES_TABLE,
+                    FootballDataContract.SCORES_TABLE,
                     projection,null,null,null,null,sortOrder); break;
             case MATCHES_WITH_DATE:
                     //Log.v(FetchScoreTask.LOG_TAG,selectionArgs[1]);
                     //Log.v(FetchScoreTask.LOG_TAG,selectionArgs[2]);
                     retCursor = mOpenHelper.getReadableDatabase().query(
-                    DatabaseContract.SCORES_TABLE,
+                    FootballDataContract.SCORES_TABLE,
                     projection,SCORES_BY_DATE,selectionArgs,null,null,sortOrder); break;
             case MATCHES_WITH_ID: retCursor = mOpenHelper.getReadableDatabase().query(
-                    DatabaseContract.SCORES_TABLE,
+                    FootballDataContract.SCORES_TABLE,
                     projection,SCORES_BY_ID,selectionArgs,null,null,sortOrder); break;
             case MATCHES_WITH_LEAGUE: retCursor = mOpenHelper.getReadableDatabase().query(
-                    DatabaseContract.SCORES_TABLE,
+                    FootballDataContract.SCORES_TABLE,
                     projection,SCORES_BY_LEAGUE,selectionArgs,null,null,sortOrder); break;
             default: throw new UnsupportedOperationException("Unknown Uri" + uri);
         }
@@ -135,7 +133,7 @@ public class ScoresProvider extends ContentProvider
     public int bulkInsert(Uri uri, ContentValues[] values)
     {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        //db.delete(DatabaseContract.SCORES_TABLE,null,null);
+        //db.delete(FootballDataContract.SCORES_TABLE,null,null);
         //Log.v(FetchScoreTask.LOG_TAG,String.valueOf(muriMatcher.match(uri)));
         switch (match_uri(uri))
         {
@@ -146,7 +144,7 @@ public class ScoresProvider extends ContentProvider
                 {
                     for(ContentValues value : values)
                     {
-                        long _id = db.insertWithOnConflict(DatabaseContract.SCORES_TABLE, null, value,
+                        long _id = db.insertWithOnConflict(FootballDataContract.SCORES_TABLE, null, value,
                                 SQLiteDatabase.CONFLICT_REPLACE);
                         if (_id != -1)
                         {

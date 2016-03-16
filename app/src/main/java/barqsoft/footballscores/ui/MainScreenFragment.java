@@ -12,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.activity.MainActivity;
-import barqsoft.footballscores.data.DatabaseContract;
-import barqsoft.footballscores.service.FectFootballApiService;
+import barqsoft.footballscores.data.FootballDataContract;
+import barqsoft.footballscores.service.FetchFootballApiService;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -34,18 +33,19 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
 
     private void update_scores()
     {
-        Intent service_start = new Intent(getActivity(), FectFootballApiService.class);
+        Intent service_start = new Intent(getActivity(), FetchFootballApiService.class);
         getActivity().startService(service_start);
     }
-    public void setFragmentDate(String date)
-    {
-        fragmentdate[0] = date;
-    }
+
+
+    public void setFragmentDate(String date) {fragmentdate[0] = date;}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         update_scores();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
         final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
         mAdapter = new scoresAdapter(getActivity(),null,0);
         score_list.setAdapter(mAdapter);
@@ -62,38 +62,31 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
                 mAdapter.notifyDataSetChanged();
             }
         });
+
         return rootView;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
-        return new CursorLoader(getActivity(), DatabaseContract.scores_table.buildScoreWithDate(),
+        return new CursorLoader(getActivity(), FootballDataContract.scores_table.buildScoreWithDate(),
                 null,null,fragmentdate,null);
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
-    {
-        //Log.v(FetchScoreTask.LOG_TAG,"loader finished");
-        //cursor.moveToFirst();
-        /*
-        while (!cursor.isAfterLast())
-        {
-            Log.v(FetchScoreTask.LOG_TAG,cursor.getString(1));
-            cursor.moveToNext();
-        }
-        */
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        if (!cursor.moveToFirst()) {
 
+        }
         int i = 0;
-        cursor.moveToFirst();
+//        cursor.moveToFirst();
         while (!cursor.isAfterLast())
         {
             i++;
             cursor.moveToNext();
         }
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
-        mAdapter.swapCursor(cursor);
+            mAdapter.swapCursor(cursor);
         //mAdapter.notifyDataSetChanged();
     }
 

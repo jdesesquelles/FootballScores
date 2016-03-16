@@ -23,7 +23,7 @@
         </activity>
 
         <provider
-            android:name=".data.ScoresProvider"
+            android:name=".data.FootballScoresProvider"
             android:authorities="barqsoft.footballscores" />
 
         <activity
@@ -34,7 +34,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
         </activity>
-        <service android:name=".service.FectFootballApiService" />
+        <service android:name=".service.FetchFootballApiService" />
 
         <!-- Today Widget -->
         <receiver

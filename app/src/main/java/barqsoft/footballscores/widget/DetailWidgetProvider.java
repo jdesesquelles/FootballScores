@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 import barqsoft.footballscores.activity.MainActivity;
 import barqsoft.footballscores.R;
-import barqsoft.footballscores.service.FectFootballApiService;
+import barqsoft.footballscores.service.FetchFootballApiService;
 
 import android.support.v4.app.TaskStackBuilder;
 
@@ -54,7 +54,7 @@ public class DetailWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
-        if (FectFootballApiService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+        if (FetchFootballApiService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));

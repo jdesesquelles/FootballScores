@@ -11,8 +11,9 @@ import android.os.Build;
 import android.widget.RemoteViews;
 import barqsoft.footballscores.activity.MainActivity;
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.data.FootballDataContract;
 import barqsoft.footballscores.utils.Utilities;
-import barqsoft.footballscores.data.DatabaseContract;
+
 import java.util.Date;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -25,10 +26,10 @@ public class GameScoreWidgetIntentService extends IntentService {
     private String[] mDate = new String[1];
 
     private static final String[] GAME_SCORE_COLUMNS = {
-            DatabaseContract.scores_table.HOME_COL,
-            DatabaseContract.scores_table.HOME_GOALS_COL,
-            DatabaseContract.scores_table.AWAY_COL,
-            DatabaseContract.scores_table.AWAY_GOALS_COL,
+            FootballDataContract.scores_table.HOME_COL,
+            FootballDataContract.scores_table.HOME_GOALS_COL,
+            FootballDataContract.scores_table.AWAY_COL,
+            FootballDataContract.scores_table.AWAY_GOALS_COL,
     };
     // these indices must match the projection
     private static final int INDEX_HOME_CREST = 0;
@@ -52,7 +53,7 @@ public class GameScoreWidgetIntentService extends IntentService {
         Date date = new Date(System.currentTimeMillis());
         mDate[0] = date.toString();
 
-        Cursor data = getContentResolver().query(DatabaseContract.BASE_CONTENT_URI, GAME_SCORE_COLUMNS, DatabaseContract.scores_table.DATE_COL,
+        Cursor data = getContentResolver().query(FootballDataContract.BASE_CONTENT_URI, GAME_SCORE_COLUMNS, FootballDataContract.scores_table.DATE_COL,
                 mDate, null);
 
         if (data == null) {

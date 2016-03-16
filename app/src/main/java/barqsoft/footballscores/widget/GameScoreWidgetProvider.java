@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import barqsoft.footballscores.service.FectFootballApiService;
+import barqsoft.footballscores.service.FetchFootballApiService;
 
 
 public class GameScoreWidgetProvider extends AppWidgetProvider {
@@ -19,7 +19,7 @@ public class GameScoreWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
-        if (FectFootballApiService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+        if (FetchFootballApiService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
             context.startService(new Intent(context, GameScoreWidgetIntentService.class));
         }
     }

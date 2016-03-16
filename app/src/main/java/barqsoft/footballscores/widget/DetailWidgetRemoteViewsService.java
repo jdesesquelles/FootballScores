@@ -10,19 +10,19 @@ import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.data.FootballDataContract;
 import barqsoft.footballscores.utils.Utilities;
-import barqsoft.footballscores.data.DatabaseContract;
 
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class DetailWidgetRemoteViewsService extends RemoteViewsService {
     public final String LOG_TAG = DetailWidgetRemoteViewsService.class.getSimpleName();
     private static final String[] GAME_SCORE_COLUMNS = {
-            DatabaseContract.scores_table.HOME_COL,
-            DatabaseContract.scores_table.HOME_GOALS_COL,
-            DatabaseContract.scores_table.AWAY_COL,
-            DatabaseContract.scores_table.AWAY_GOALS_COL,
-            DatabaseContract.scores_table.MATCH_ID
+            FootballDataContract.scores_table.HOME_COL,
+            FootballDataContract.scores_table.HOME_GOALS_COL,
+            FootballDataContract.scores_table.AWAY_COL,
+            FootballDataContract.scores_table.AWAY_GOALS_COL,
+            FootballDataContract.scores_table.MATCH_ID
     };
     // these indices must match the projection
     private static final int INDEX_HOME_CREST = 0;
@@ -52,7 +52,7 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                 // data. Therefore we need to clear (and finally restore) the calling identity so
                 // that calls use our process and permission
                 final long identityToken = Binder.clearCallingIdentity();
-                data = getContentResolver().query(DatabaseContract.BASE_CONTENT_URI, GAME_SCORE_COLUMNS, DatabaseContract.scores_table.DATE_COL,
+                data = getContentResolver().query(FootballDataContract.BASE_CONTENT_URI, GAME_SCORE_COLUMNS, FootballDataContract.scores_table.DATE_COL,
                         null, null);
                 Binder.restoreCallingIdentity(identityToken);
             }
@@ -103,7 +103,7 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                     views.setTextViewText(R.id.widget_away_score_text, awayGoals);
 
                 final Intent fillInIntent = new Intent();
-                Uri matchUri = DatabaseContract.scores_table.buildScoreWithId();
+                Uri matchUri = FootballDataContract.scores_table.buildScoreWithId();
                 fillInIntent.setData(matchUri);
                 views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
                 return views;
